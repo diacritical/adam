@@ -34,6 +34,7 @@ defmodule Adam.MixProject do
       app: :adam,
       build_path: "../../_build",
       elixir: "~> 1.14",
+      elixirc_options: [warnings_as_errors: true],
       start_permanent: Mix.env() == :prod,
       version: "0.1.0"
     ]
