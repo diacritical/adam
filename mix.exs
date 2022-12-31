@@ -31,8 +31,17 @@ defmodule Adam.MixProject do
   @spec project() :: project()
   def project() do
     [
+      aliases: [
+        "boundary.ex_doc_groups": [
+          "boundary.ex_doc_groups",
+          "cmd tail -n +2 boundary.exs > .boundary.exs",
+          "cmd rm boundary.exs"
+        ]
+      ],
       app: :adam,
+      boundary: [default: [type: :strict]],
       build_path: "../../_build",
+      compilers: [:boundary | Mix.compilers()],
       deps: [{:boundary, "~> 0.9", runtime: false}],
       deps_path: "../../dep",
       elixir: "~> 1.14",

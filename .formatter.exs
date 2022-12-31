@@ -1,5 +1,5 @@
 [
   force_do_end_blocks: true,
-  inputs: ["{.formatter,mix}.exs", "{lib,test}/**/*.{ex,exs}"],
+  inputs: [".{boundary,formatter}.exs", "{lib,test}/**/*.{ex,exs}", "mix.exs"],
   line_length: 80
 ]

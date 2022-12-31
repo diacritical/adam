@@ -1,6 +1,8 @@
 defmodule Adam do
-  @moduledoc "Demonstrates `Kernel` syntax."
+  @moduledoc "Demonstrates `Kernel` syntax and defines a `Boundary` boundary."
   @moduledoc since: "0.1.0"
+
+  use Boundary
 
   @typedoc "Represents the greeting."
   @typedoc since: "0.1.0"

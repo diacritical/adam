@@ -1,4 +1,5 @@
 *.beam
 *.ez
+boundary/
 cover/
 erl_crash.dump
