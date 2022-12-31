@@ -33,8 +33,11 @@ defmodule Adam.MixProject do
     [
       app: :adam,
       build_path: "../../_build",
+      deps: [],
+      deps_path: "../../dep",
       elixir: "~> 1.14",
       elixirc_options: [warnings_as_errors: true],
+      lockfile: "../../mix.lock",
       start_permanent: Mix.env() == :prod,
       version: "0.1.0"
     ]
