@@ -33,7 +33,7 @@ defmodule Adam.MixProject do
     [
       app: :adam,
       build_path: "../../_build",
-      deps: [],
+      deps: [{:boundary, "~> 0.9", runtime: false}],
       deps_path: "../../dep",
       elixir: "~> 1.14",
       elixirc_options: [warnings_as_errors: true],
