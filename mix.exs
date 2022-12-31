@@ -42,7 +42,10 @@ defmodule Adam.MixProject do
       boundary: [default: [type: :strict]],
       build_path: "../../_build",
       compilers: [:boundary | Mix.compilers()],
-      deps: [{:boundary, "~> 0.9", runtime: false}],
+      deps: [
+        {:boundary, "~> 0.9", runtime: false},
+        {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+      ],
       deps_path: "../../dep",
       elixir: "~> 1.14",
       elixirc_options: [warnings_as_errors: true],
