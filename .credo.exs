@@ -120,6 +120,7 @@
         included: [
           ".boundary.exs",
           ".credo.exs",
+          ".dialyzer.exs",
           ".formatter.exs",
           "{lib,test}/**/*.{ex,exs}",
           "mix.exs"

@@ -1,7 +1,7 @@
 [
   force_do_end_blocks: true,
   inputs: [
-    ".{boundary,credo,formatter}.exs",
+    ".{boundary,credo,dialyzer,formatter}.exs",
     "{lib,test}/**/*.{ex,exs}",
     "mix.exs"
   ],

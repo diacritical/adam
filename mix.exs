@@ -49,6 +49,7 @@ defmodule Adam.MixProject do
         {:dialyxir, "~> 1.2", only: :dev, runtime: false}
       ],
       deps_path: "../../dep",
+      dialyzer: [ignore_warnings: ".dialyzer.exs"],
       elixir: "~> 1.14",
       elixirc_options: [warnings_as_errors: true],
       lockfile: "../../mix.lock",
