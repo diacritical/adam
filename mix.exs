@@ -1,8 +1,12 @@
 defmodule Adam.MixProject do
-  @moduledoc "Defines a `Mix.Project` project."
+  @moduledoc "Defines a `Mix.Project` project and an OTP application."
   @moduledoc since: "0.1.0"
 
   use Mix.Project
+
+  alias Adam, as: Core
+
+  alias Core.Application
 
   @typedoc "Represents the environment."
   @typedoc since: "0.2.0"
@@ -26,6 +30,16 @@ defmodule Adam.MixProject do
   @typedoc "Represents the project configuration."
   @typedoc since: "0.1.0"
   @type project() :: [project_keyword()]
+
+  @typedoc "Represents the application configuration keyword."
+  @typedoc since: "0.3.0"
+  @type application_keyword() ::
+          {:mod, {module(), Application.init_arg()}}
+          | {Keyword.key(), Keyword.value()}
+
+  @typedoc "Represents the application configuration."
+  @typedoc since: "0.3.0"
+  @type application() :: [application_keyword()]
 
   @spec groups_for_modules(env()) :: groups_for_modules()
   defp groups_for_modules(:dev) do
@@ -96,5 +110,19 @@ defmodule Adam.MixProject do
       start_permanent: Mix.env() == :prod,
       version: "0.2.0"
     ]
+  end
+
+  @doc """
+  Defines the application configuration for `Adam`.
+
+  ## Example
+
+      iex> {Application, _init_arg} = application()[:mod]
+
+  """
+  @doc since: "0.3.0"
+  @spec application() :: application()
+  def application() do
+    [mod: {Application, []}]
   end
 end
