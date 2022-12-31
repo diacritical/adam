@@ -12,6 +12,10 @@ defmodule Adam.MixProject do
   @typedoc since: "0.2.0"
   @type groups_for_modules() :: Keyword.t([module()]) | nil
 
+  @typedoc "Represents the compilation path."
+  @typedoc since: "0.3.0"
+  @type elixirc_paths() :: [Path.t()]
+
   @typedoc "Represents the project configuration keyword."
   @typedoc since: "0.1.0"
   @type project_keyword() ::
@@ -30,6 +34,19 @@ defmodule Adam.MixProject do
 
   defp groups_for_modules(env) when is_atom(env) do
     nil
+  end
+
+  @spec elixirc_paths(env()) :: elixirc_paths()
+  defp elixirc_paths(:dev) do
+    elixirc_paths(:test)
+  end
+
+  defp elixirc_paths(:test) do
+    ["support" | elixirc_paths(:prod)]
+  end
+
+  defp elixirc_paths(env) when is_atom(env) do
+    ["lib"]
   end
 
   @doc """
@@ -71,6 +88,7 @@ defmodule Adam.MixProject do
       docs: [groups_for_modules: groups_for_modules(Mix.env())],
       elixir: "~> 1.14",
       elixirc_options: [warnings_as_errors: true],
+      elixirc_paths: elixirc_paths(Mix.env()),
       homepage_url: "https://diacritical.net",
       lockfile: "../../mix.lock",
       name: "Adam",
