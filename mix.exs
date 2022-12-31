@@ -5,8 +5,10 @@ defmodule Adam.MixProject do
   use Mix.Project
 
   alias Adam, as: Core
+  alias AdamWeb, as: Web
 
   alias Core.Application
+  alias Web.Endpoint
 
   @typedoc "Represents the environment."
   @typedoc since: "0.2.0"
@@ -124,6 +126,6 @@ defmodule Adam.MixProject do
   @doc since: "0.3.0"
   @spec application() :: application()
   def application() do
-    [mod: {Application, []}]
+    [mod: {Application, [children: [{Bandit, plug: Endpoint}]]}]
   end
 end
