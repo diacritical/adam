@@ -72,7 +72,7 @@ defmodule Adam.MixProject do
       :adam
 
       iex> project()[:version]
-      "0.2.0"
+      "0.3.0"
 
   """
   @doc since: "0.1.0"
@@ -108,7 +108,7 @@ defmodule Adam.MixProject do
       name: "Adam",
       source_url: "https://github.com/diacritical/adam",
       start_permanent: Mix.env() == :prod,
-      version: "0.2.0"
+      version: "0.3.0"
     ]
   end
 
