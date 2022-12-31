@@ -1,1 +1,1 @@
-[Adam: [Adam, Adam.Supervisor], AdamCase: [AdamCase]]
+[Adam: [Adam, Adam.Supervisor], AdamCase: [AdamCase, AdamCase.Supervisor]]

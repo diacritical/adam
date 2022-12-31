@@ -2,7 +2,7 @@ defmodule Adam.SupervisorTest do
   @moduledoc "Defines an `ExUnit.Case` case."
   @moduledoc since: "0.3.0"
 
-  use ExUnit.Case, async: true
+  use AdamCase.Supervisor, async: true
 
   alias Adam, as: Core
   alias AdamCase, as: Case
@@ -17,20 +17,10 @@ defmodule Adam.SupervisorTest do
   @typedoc since: "0.3.0"
   @type context_merge() :: Case.context_merge()
 
-  @spec c_init_arg(context()) :: context_merge()
-  defp c_init_arg(c) when is_map(c) do
-    %{init_arg: %{invalid: %{}, valid: []}}
-  end
-
   @spec start_supervisor!(context()) :: context_merge()
   defp start_supervisor!(c) when is_map(c) do
     start_supervised!(Supervisor)
     :ok
-  end
-
-  @spec c_err(context()) :: context_merge()
-  defp c_err(c) when is_map(c) do
-    %{err: {:error, {:already_started, Process.whereis(Supervisor)}}}
   end
 
   doctest Supervisor, import: true
