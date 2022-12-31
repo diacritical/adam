@@ -45,7 +45,8 @@ defmodule Adam.MixProject do
       compilers: [:boundary | Mix.compilers()],
       deps: [
         {:boundary, "~> 0.9", runtime: false},
-        {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
+        {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
+        {:dialyxir, "~> 1.2", only: :dev, runtime: false}
       ],
       deps_path: "../../dep",
       elixir: "~> 1.14",
