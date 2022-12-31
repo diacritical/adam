@@ -5,17 +5,17 @@ defmodule Adam.SupervisorTest do
   use ExUnit.Case, async: true
 
   alias Adam, as: Core
+  alias AdamCase, as: Case
 
   alias Core.Supervisor
 
   @typedoc "Represents the current context."
   @typedoc since: "0.3.0"
-  @type context() :: map()
+  @type context() :: Case.context()
 
   @typedoc "Represents the context merge value."
   @typedoc since: "0.3.0"
-  @type context_merge() ::
-          map() | Keyword.t() | {:ok, map() | Keyword.t()} | :ok
+  @type context_merge() :: Case.context_merge()
 
   @spec c_init_arg(context()) :: context_merge()
   defp c_init_arg(c) when is_map(c) do
