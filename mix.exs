@@ -4,6 +4,14 @@ defmodule Adam.MixProject do
 
   use Mix.Project
 
+  @typedoc "Represents the environment."
+  @typedoc since: "0.2.0"
+  @type env() :: :dev | :prod | :test | atom()
+
+  @typedoc "Represents the module documentation grouping."
+  @typedoc since: "0.2.0"
+  @type groups_for_modules() :: Keyword.t([module()]) | nil
+
   @typedoc "Represents the project configuration keyword."
   @typedoc since: "0.1.0"
   @type project_keyword() ::
@@ -14,6 +22,15 @@ defmodule Adam.MixProject do
   @typedoc "Represents the project configuration."
   @typedoc since: "0.1.0"
   @type project() :: [project_keyword()]
+
+  @spec groups_for_modules(env()) :: groups_for_modules()
+  defp groups_for_modules(:dev) do
+    ".boundary.exs" |> Code.eval_file() |> elem(0)
+  end
+
+  defp groups_for_modules(env) when is_atom(env) do
+    nil
+  end
 
   @doc """
   Defines the project configuration for `Adam`.
@@ -51,9 +68,13 @@ defmodule Adam.MixProject do
       ],
       deps_path: "../../dep",
       dialyzer: [ignore_warnings: ".dialyzer.exs"],
+      docs: [groups_for_modules: groups_for_modules(Mix.env())],
       elixir: "~> 1.14",
       elixirc_options: [warnings_as_errors: true],
+      homepage_url: "https://diacritical.net",
       lockfile: "../../mix.lock",
+      name: "Adam",
+      source_url: "https://github.com/diacritical/adam",
       start_permanent: Mix.env() == :prod,
       version: "0.1.0"
     ]

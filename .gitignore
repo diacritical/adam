@@ -2,4 +2,5 @@
 *.ez
 boundary/
 cover/
+doc/
 erl_crash.dump
