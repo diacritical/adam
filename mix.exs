@@ -98,7 +98,8 @@ defmodule Adam.MixProject do
         {:boundary, "~> 0.9", runtime: false},
         {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
         {:dialyxir, "~> 1.2", only: :dev, runtime: false},
-        {:ex_doc, "~> 0.29", only: :dev, runtime: false}
+        {:ex_doc, "~> 0.29", only: :dev, runtime: false},
+        {:phoenix, "~> 1.7.0-rc"}
       ],
       deps_path: "../../dep",
       dialyzer: [ignore_warnings: ".dialyzer.exs"],
