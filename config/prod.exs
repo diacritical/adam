@@ -54,7 +54,11 @@ config :adam, Proxy,
   secret_key_base: secret_key_base,
   server: true,
   url: [host: nil, path: "/", port: 443, scheme: "https"],
-  vhost: [".localhost": {:adam, Endpoint}]
+  vhost: [
+    ".localhost": {:adam, Endpoint},
+    ".net.diacritical": {:net_diacritical, NetDiacriticalWeb.Endpoint}
+  ]
 
 config :logger, level: :info
+config :net_diacritical, NetDiacriticalWeb.Endpoint, proxy: Proxy
 config :phoenix, :json_library, Jason

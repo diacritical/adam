@@ -100,6 +100,7 @@ defmodule Adam.MixProject do
         {:dialyxir, "~> 1.2", only: :dev, runtime: false},
         {:ex_doc, "~> 0.29", only: :dev, runtime: false},
         {:jason, "~> 1.4"},
+        {:net_diacritical, in_umbrella: true},
         {:phoenix, "~> 1.7.0-rc"}
       ],
       deps_path: "../../dep",
