@@ -2,15 +2,11 @@ defmodule AdamWeb.EndpointTest do
   @moduledoc "Defines an `ExUnit.Case` case."
   @moduledoc since: "0.4.0"
 
-  use ExUnit.Case, async: true
+  use AdamCase.Conn, async: true
 
-  import Phoenix.ConnTest
-
-  alias Adam, as: Core
   alias AdamCase, as: Case
   alias AdamWeb, as: Web
 
-  alias Core.PubSub
   alias Web.Endpoint
 
   @typedoc "Represents the current context."
@@ -21,108 +17,9 @@ defmodule AdamWeb.EndpointTest do
   @typedoc since: "0.4.0"
   @type context_merge() :: Case.context_merge()
 
-  @spec c_key(context()) :: context_merge()
-  defp c_key(c) when is_map(c) do
-    %{key: :url}
-  end
-
-  @spec c_config_url(context()) :: context_merge()
-  defp c_config_url(c) when is_map(c) do
-    %{config: [url: [port: 4_003, scheme: "https"]]}
-  end
-
-  @spec c_config_url_path(context()) :: context_merge()
-  defp c_config_url_path(c) when is_map(c) do
-    %{config: [url: [{:path, "/"} | c[:config][:url] || []]]}
-  end
-
-  @spec c_config_url_host(context()) :: context_merge()
-  defp c_config_url_host(c) when is_map(c) do
-    %{config: [url: [{:host, "localhost"} | c[:config][:url] || []]]}
-  end
-
-  @spec c_uri(context()) :: context_merge()
-  defp c_uri(%{config: [{key, [host: host, port: port, scheme: scheme]}]} = c)
-       when is_atom(key) and is_binary(host) and is_integer(port) and
-              is_binary(scheme) do
-    struct =
-      URI.merge(
-        %URI{host: host, port: port, scheme: scheme},
-        c[:request_path] || ""
-      )
-
-    %{uri: %{string: URI.to_string(struct), struct: struct}}
-  end
-
-  @spec c_request_path_hello(context()) :: context_merge()
-  defp c_request_path_hello(c) when is_map(c) do
-    %{request_path: "/hello"}
-  end
-
-  @spec c_path(context()) :: context_merge()
-  defp c_path(%{config: [{key, [path: path]}], request_path: request_path})
-       when is_atom(key) and is_binary(path) and is_binary(request_path) do
-    %{path: String.replace(path, ~r/^\/$/, "") <> request_path}
-  end
-
-  @spec c_config_static_url(context()) :: context_merge()
-  defp c_config_static_url(%{config: [url: url]}) when is_list(url) do
-    %{config: [static_url: url]}
-  end
-
-  @spec c_hash(context()) :: context_merge()
-  defp c_hash(c) when is_map(c) do
-    %{hash: nil}
-  end
-
-  @spec c_opt_init(context()) :: context_merge()
-  defp c_opt_init(c) when is_map(c) do
-    %{opt: []}
-  end
-
-  @spec c_err(context()) :: context_merge()
-  defp c_err(c) when is_map(c) do
-    %{err: {:error, {:already_started, Process.whereis(Endpoint)}}}
-  end
-
-  @spec c_conn(context()) :: context_merge()
-  defp c_conn(c) when is_map(c) do
-    %{
-      conn: %{
-        invalid: %{},
-        valid: build_conn(:get, c[:uri][:string] || c[:request_path])
-      }
-    }
-  end
-
-  @spec c_opt(context()) :: context_merge()
-  defp c_opt(c) when is_map(c) do
-    %{opt: []}
-  end
-
-  @spec c_status_ok(context()) :: context_merge()
-  defp c_status_ok(c) when is_map(c) do
-    %{status: %{ok: 200}}
-  end
-
-  @spec c_resp_body_hello(context()) :: context_merge()
-  defp c_resp_body_hello(c) when is_map(c) do
-    %{resp_body: %{hello: Core.greet() <> "\n"}}
-  end
-
-  @spec c_topic_pubsub(context()) :: context_merge()
-  defp c_topic_pubsub(c) when is_map(c) do
-    %{conf: :ok, topic: "topic"}
-  end
-
-  @spec c_event_pubsub(context()) :: context_merge()
-  defp c_event_pubsub(c) when is_map(c) do
-    %{event: "event", msg: %{id: :rand.uniform(1_000)}}
-  end
-
-  @spec c_pid_pubsub(context()) :: context_merge()
-  defp c_pid_pubsub(c) when is_map(c) do
-    %{pid: Process.whereis(PubSub)}
+  @spec c_pid_endpoint(context()) :: context_merge()
+  defp c_pid_endpoint(c) when is_map(c) do
+    %{pid: Process.whereis(Endpoint)}
   end
 
   doctest Endpoint, import: true
@@ -274,7 +171,7 @@ defmodule AdamWeb.EndpointTest do
   describe "start_link/0" do
     import Endpoint, only: [start_link: 0]
 
-    setup :c_err
+    setup [:c_pid_endpoint, :c_err]
 
     test "success", %{err: err} do
       assert start_link() == err
@@ -284,7 +181,7 @@ defmodule AdamWeb.EndpointTest do
   describe "start_link/1" do
     import Endpoint, only: [start_link: 1]
 
-    setup [:c_opt_init, :c_err]
+    setup ~w[c_opt_init c_pid_endpoint c_err]a
 
     test "success", %{err: err, opt: opt} do
       assert start_link(opt) == err
@@ -333,20 +230,12 @@ defmodule AdamWeb.EndpointTest do
       :c_config_url_host,
       :c_uri,
       :c_conn,
+      :c_conn_script_name,
+      :c_conn_secret_key_base,
       :c_opt,
       :c_status_ok,
       :c_resp_body_hello
     ]
-
-    setup %{conn: %{invalid: invalid} = conn} do
-      %{
-        conn: %{
-          conn
-          | invalid:
-              Map.merge(invalid, %{script_name: nil, secret_key_base: nil})
-        }
-      }
-    end
 
     test "FunctionClauseError", %{conn: conn, opt: opt} do
       assert_raise FunctionClauseError, fn -> call(conn.invalid, opt) end

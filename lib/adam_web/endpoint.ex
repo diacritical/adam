@@ -20,11 +20,11 @@ defmodule AdamWeb.Endpoint do
 
   ## Example
 
-      iex> c = c_request_path_hello(%{})
+      iex> c = c_request_path_hello()
       iex> %{conn: %{valid: conn}} = c_conn(c)
-      iex> %{opt: opt} = c_opt(%{})
-      iex> %{status: %{ok: status}} = c_status_ok(%{})
-      iex> %{resp_body: %{hello: resp_body}} = c_resp_body_hello(%{})
+      iex> %{opt: opt} = c_opt()
+      iex> %{status: %{ok: status}} = c_status_ok()
+      iex> %{resp_body: %{hello: resp_body}} = c_resp_body_hello()
       iex>
       iex> text_response(hello(conn, opt), status)
       resp_body
