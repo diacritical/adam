@@ -99,6 +99,7 @@ defmodule Adam.MixProject do
         {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
         {:dialyxir, "~> 1.2", only: :dev, runtime: false},
         {:ex_doc, "~> 0.29", only: :dev, runtime: false},
+        {:jason, "~> 1.4"},
         {:phoenix, "~> 1.7.0-rc"}
       ],
       deps_path: "../../dep",
