@@ -7,7 +7,7 @@ defmodule Adam.MixProject do
   alias Adam, as: Core
   alias AdamWeb, as: Web
 
-  alias Core.Application
+  alias Core.{Application, PubSub}
   alias Web.Endpoint
 
   @typedoc "Represents the environment."
@@ -128,6 +128,6 @@ defmodule Adam.MixProject do
   @doc since: "0.3.0"
   @spec application() :: application()
   def application() do
-    [mod: {Application, [children: [{Bandit, plug: Endpoint}]]}]
+    [mod: {Application, [children: [Endpoint, {Phoenix.PubSub, name: PubSub}]]}]
   end
 end
